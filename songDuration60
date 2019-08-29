@@ -1,0 +1,12 @@
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        int[] rem = new int[60];
+        int pairCount = 0;
+        
+        for (int t : time) {
+            pairCount += rem[(600-t) % 60];
+            rem[t%60] += 1;
+        }
+        return pairCount;
+    }
+}
