@@ -1,0 +1,20 @@
+class Solution {
+    public int climbStairs(int n) {
+        int[] steps = new int[n+1];
+        Arrays.fill(steps, -1);
+        // steps[0] = 0;
+        // steps[1] = 1;
+        return climbUtil(n, steps);
+    }
+    
+    private int climbUtil(int n, int[] steps) {
+        if (n == 0 || n == 1 || n == 2) {
+            steps[n] = n;
+            return steps[n];
+        }   
+        if (steps[n] == -1) {
+            steps[n] = climbUtil(n-1, steps) + climbUtil(n-2, steps);
+        }
+        return steps[n];
+    }
+}
