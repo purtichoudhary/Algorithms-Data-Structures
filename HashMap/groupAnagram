@@ -1,0 +1,22 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> groupedAnagram = new ArrayList<>();
+        HashMap<String, List<String>> anagramList = new HashMap<>();
+        
+        for (String current : strs) {
+            char[] characters = current.toCharArray();
+            Arrays.sort(characters);
+            String sorted = new String(characters);
+            
+            if (!anagramList.containsKey(sorted)) {
+                anagramList.put(sorted, new ArrayList<>());
+            }
+            
+            anagramList.get(sorted).add(current);
+        }
+        
+        groupedAnagram.addAll(anagramList.values());
+        
+        return groupedAnagram;
+    }
+}
