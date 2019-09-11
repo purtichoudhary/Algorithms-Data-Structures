@@ -1,0 +1,26 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        if (n <= 0 ) {
+            return result;
+        }
+        
+        helper(0, 0, "", n, result);
+        return result;
+    }
+    
+    private void helper(int open, int close, String str, int max, List<String> result) {
+        if (str.length() == max*2) {
+            result.add(str);
+            return;
+        }
+        
+        if (open < max) {
+            helper(open+1, close, str+"(", max, result);
+        }
+        
+        if (open > close) {
+            helper(open, close+1, str+")", max, result);
+        }
+    }
+}
