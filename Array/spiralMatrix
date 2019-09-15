@@ -1,0 +1,43 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        if (matrix == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+        List<Integer> spiralTraversal = new ArrayList<>();
+        if (matrix.length == 0) {
+            return spiralTraversal;
+        }
+        
+        int rowBegin = 0;
+        int rowEnd = matrix.length - 1;
+        int columnBegin = 0;
+        int columnEnd = matrix[0].length - 1;
+        
+        while (rowBegin <= rowEnd && columnBegin <= columnEnd) {
+            for (int i = columnBegin; i <= columnEnd; i++) {
+                spiralTraversal.add(matrix[rowBegin][i]);
+            }
+            rowBegin++;
+            
+            for (int i = rowBegin; i <= rowEnd; i++) {
+                spiralTraversal.add(matrix[i][columnEnd]);
+            }
+            columnEnd--;
+            
+            if (rowBegin <= rowEnd) {
+                for (int i = columnEnd; i >= columnBegin; i--) {
+                    spiralTraversal.add(matrix[rowEnd][i]);
+                }
+            }
+            rowEnd--;
+            
+            if (columnBegin <= columnEnd) {
+                for (int i = rowEnd; i >= rowBegin; i--) {
+                    spiralTraversal.add(matrix[i][columnBegin]);
+                }
+            }
+            columnBegin++;
+        }
+        return spiralTraversal;
+    }
+}
