@@ -1,0 +1,34 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<String>();
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+        
+        String[] mapping = {"0",
+                           "1",
+                           "abc",
+                           "def",
+                           "ghi",
+                           "jkl",
+                           "mno",
+                           "pqrs",
+                           "tuv",
+                           "wxyz"};
+        
+        letterCombinationRecursive(digits, result, "", 0, mapping);
+        
+        return result;
+    }
+    
+    private void letterCombinationRecursive(String digits, List<String> result, String current, int index, String[] mapping) {
+        if (index == digits.length()) {
+            result.add(current);
+            return;
+        }
+        String letter = mapping[digits.charAt(index) - '0'];
+        for (int i = 0; i < letter.length(); i++) {
+            letterCombinationRecursive(digits, result, current + letter.charAt(i), index + 1, mapping);
+        }
+    }
+}
