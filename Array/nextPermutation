@@ -1,0 +1,34 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if (nums == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+        int swapIndex = -1;
+        for (int i = nums.length-2; i >= 0; i--) {
+            if (nums[i] < nums[i+1]) {
+                swapIndex = i;
+                break;
+            }
+        }
+        
+        if (swapIndex == -1) {
+            Arrays.sort(nums);
+            return;
+        }
+        
+        int min = swapIndex+1;
+        
+        for (int i = min+1; i < nums.length; i++) {
+            if (nums[swapIndex] < nums[i] && nums[min] > nums[i]) {
+                min = i;
+            }
+        }
+        
+        int temp = nums[swapIndex];
+        nums[swapIndex] = nums[min];
+        nums[min] = temp;
+        
+        Arrays.sort(nums, swapIndex+1, nums.length);
+        return;
+    }
+}
