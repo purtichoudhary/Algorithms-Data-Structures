@@ -1,0 +1,32 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet(wordDict);
+        int maxSize = 0;
+        
+        for (String str : wordSet) {
+            maxSize = Math.max(maxSize, str.length());
+        }
+        
+        int[] dp = new int[s.length()];
+        
+        return judge(s, 0, wordSet, dp, maxSize);
+    }
+    
+    private boolean judge(String s, int start, Set wordSet, int[] dp, int maxSize) {
+        if (start == s.length()) return true;
+        if(dp[start] == 1) return true;
+        if(dp[start] == -1) return false;
+        
+        int length = 1;
+        
+        while (length <= maxSize && start+length <= s.length()) {
+            if (wordSet.contains(s.substring(start, start+length)) && judge(s, start+length, wordSet, dp, maxSize)) {
+                dp[start] = 1;
+                return true;
+            }
+            length++;
+        }
+        dp[start] = -1;
+        return false;
+    }
+}
