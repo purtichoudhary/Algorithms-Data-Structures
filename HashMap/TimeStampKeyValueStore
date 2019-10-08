@@ -1,0 +1,79 @@
+class TimeMap {
+
+    /** Initialize your data structure here. */
+    Map<String, ArrayList<Node>> map;
+    boolean isMid = false;
+    
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+        if(!map.containsKey(key)) {
+            map.put(key, new ArrayList<Node>());
+            map.get(key).add(new Node(timestamp, value));
+        } else {
+            int x = search(map.get(key), timestamp);
+            if(x==map.get(key).size()-1)
+                map.get(key).add(new Node(timestamp,value));
+            else
+                map.get(key).add(x,new Node(timestamp,value));
+        }
+    }
+    
+    public String get(String key, int timestamp) {
+        if(!map.containsKey(key))
+            return "";
+        
+        int x=search(map.get(key),timestamp);
+        if(x==0 && !isMid)
+                return "";
+        else if(x==0 && isMid)
+                return map.get(key).get(x).value;
+        else if(x==map.get(key).size())
+            return map.get(key).get(x-1).value;
+        else if(isMid)
+             return map.get(key).get(x).value;
+        
+        return map.get(key).get(x-1).value;
+    }
+    
+    public int search(ArrayList<Node> arr, int key) {
+        int l=0;
+        int h=arr.size()-1;
+        int mid=0;
+        while(l<=h)
+        {
+            mid=l+(h-l)/2;
+            if(arr.get(mid).time==key)
+            {
+                isMid=true;
+                return mid;
+            }
+                
+            else if(arr.get(mid).time<key)
+                l=mid+1;
+            else
+                h=mid-1;
+        }
+        isMid=false;
+        return l;
+    }
+        
+    class Node {
+        int time;
+        String value;
+    
+        Node(int time, String value) {
+            this.time = time;
+            this.value = value;
+        }
+    }
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.set(key,value,timestamp);
+ * String param_2 = obj.get(key,timestamp);
+ */
