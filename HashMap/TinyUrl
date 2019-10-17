@@ -1,0 +1,25 @@
+public class Codec {
+    
+    private Map<String, String> shortToLong;
+    private int encodeValue;
+    
+    Codec() {
+        shortToLong = new HashMap<>();
+        encodeValue = 0;
+    }
+    
+    // Encodes a URL to a shortened URL.
+    public String encode(String longUrl) {
+        String shortUrl = "http://tinyurl.com/" + ++encodeValue;
+        shortToLong.put(shortUrl, longUrl);
+        return shortUrl;
+    }
+
+    // Decodes a shortened URL to its original URL.
+    public String decode(String shortUrl) {
+        if(shortToLong.containsKey(shortUrl))
+            return shortToLong.get(shortUrl);
+        
+        return "";
+    }
+}
