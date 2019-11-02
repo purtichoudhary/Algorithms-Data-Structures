@@ -1,0 +1,19 @@
+class Solution {
+    public boolean judgeCircle(String moves) {
+        int verticalMove = totalMove(moves, 'U');
+        int horizontalMove = totalMove(moves, 'L');
+        
+        verticalMove -= totalMove(moves, 'D');
+        horizontalMove -= totalMove(moves, 'R');
+        return (verticalMove==0 && horizontalMove==0);
+    }
+    
+    private int totalMove(String moves, char direction) {
+        int count = 0;
+        for (char ch : moves.toCharArray()) {
+            if (ch == direction)
+                count++;
+        }
+        return count;
+    }
+}
