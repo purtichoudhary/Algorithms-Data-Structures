@@ -1,0 +1,41 @@
+class Solution {
+    public String[] reorderLogFiles(String[] logs) {
+        if(logs == null)
+            throw new IllegalArgumentException("Invalid input");
+        
+        if(logs.length == 0) return logs;
+        
+        String[] orderedLogFiles = new String[logs.length];
+        
+        Comparator<String> myComp = new Comparator<String>() {
+            
+            @Override
+            public int compare(String str1, String str2) {
+                int index1 = str1.indexOf(" ");
+                int index2 = str2. indexOf(" ");
+                
+                char s1fc = str1.charAt(index1+1);
+                char s2fc = str2.charAt(index2+1);
+                
+                if (s1fc <= '9') {
+                    if(s2fc <= '9') {
+                        return 0;
+                    }
+                    return 1;
+                } else if(s2fc <= '9') {
+                        return -1;
+                }
+                
+                int preCompute = str1.substring(index1+1).compareTo(str2.substring(index2+1));
+                
+                if(preCompute == 0) {
+                    preCompute = str1.substring(0, index1).compareTo(str2.substring(0, index2));
+                }
+                return preCompute;
+            }
+        };
+        
+        Arrays.sort(logs, myComp);
+        return logs;
+    }
+}
