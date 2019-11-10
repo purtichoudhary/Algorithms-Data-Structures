@@ -20,6 +20,6 @@ class Solution {
             }     
         }
         
-        return weight.poll();
+        return weight.size() == 1 ? weight.poll() : 0;
     }
 }
