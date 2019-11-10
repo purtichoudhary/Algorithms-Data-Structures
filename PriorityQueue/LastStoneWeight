@@ -1,0 +1,25 @@
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        if (stones == null)
+            throw new IllegalArgumentException("Invalid input!!");
+        
+        if (stones.length == 0) return 0;
+        
+        PriorityQueue<Integer> weight = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for (int stone : stones) {
+            weight.add(stone);
+        }
+        
+        while(weight.size() > 1) {
+            int y = weight.poll();
+            int x = weight.poll();
+            
+            if(x != y) {
+                weight.add(y-x);
+            }     
+        }
+        
+        return weight.poll();
+    }
+}
