@@ -1,0 +1,25 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+        int[] uglyNumbers = new int[n];
+        uglyNumbers[0] = 1;
+        int p2 = 0, p3 = 0, p5 = 0;
+        int value2 = 2, value3 = 3, value5 = 5;
+        
+        for (int i = 1; i < n; i++) {
+            int min = Math.min(value2, Math.min(value3, value5));
+            uglyNumbers[i] = min;
+            
+            if(min == value2) {
+                value2 = uglyNumbers[++p2] * 2;
+            }
+            if(min == value3) {
+                value3 = uglyNumbers[++p3] * 3;
+            }
+            if(min == value5) {
+                value5 = uglyNumbers[++p5] * 5;
+            }
+        }
+        
+        return uglyNumbers[n-1];
+    } 
+}
