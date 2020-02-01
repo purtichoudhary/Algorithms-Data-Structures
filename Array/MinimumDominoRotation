@@ -1,0 +1,28 @@
+class Solution {
+    public int minDominoRotations(int[] A, int[] B) {
+        if (A == null || B == null) {
+            throw new IllegalArgumentException("Invalid Input");
+        }
+        
+        int rotations = getRotationCount(A[0], A, B);
+    
+        if (rotations != -1 || A[0] == B[0]) return rotations;
+   
+        else return getRotationCount(B[0], A, B);
+    }
+    
+    private int getRotationCount(int num, int[] A, int[] B) {
+        int rotation_a = 0, rotation_b = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] != num && B[i] != num) {
+                return -1;
+            } else if (A[i] != num) {
+                rotation_a++;
+            } else if (B[i] != num) {
+                rotation_b++;
+            }
+        }
+        
+        return Math.min(rotation_a, rotation_b);
+    }
+}
