@@ -1,0 +1,47 @@
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] redundantEdge = new int[2];
+        
+        if(edges == null || edges.length == 0) return redundantEdge;
+        
+        UnionFind uf = new UnionFind(edges.length);
+        
+        for (int[] edge : edges) {
+            if(!uf.union(edge[0]-1, edge[1]-1)) {
+                return edge;
+            }
+        }
+        return redundantEdge;
+    }
+}
+
+class UnionFind {
+    int[] parent;
+    
+    public UnionFind(int n) {
+        parent = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    private int find(int x) {
+        while (x != parent[x]) {
+            x = parent[x];
+        }
+        return x;
+    }
+    
+    public boolean union(int x, int y) {
+        int groupX = find(x);
+        int groupY = find(y);
+        
+        if (groupX == groupY) {
+            return false;
+        } else {
+            parent[groupX] = groupY;
+            return true;
+        }
+    }
+}
