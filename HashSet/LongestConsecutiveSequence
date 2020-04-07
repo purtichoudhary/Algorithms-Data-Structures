@@ -1,0 +1,24 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        
+        Set<Integer> numbers = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            numbers.add(nums[i]);
+        }
+        
+        int maxCount = Integer.MIN_VALUE;
+        for (int num : nums) {
+            int count = 1;
+            if(numbers.contains(num-1)) {
+                continue;
+            }
+            while (numbers.contains(num+1)) {
+                count++;
+                num = num+1;
+            }
+            maxCount = Math.max(maxCount, count);
+        }
+        return maxCount;
+    }
+}
