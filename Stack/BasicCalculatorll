@@ -1,0 +1,43 @@
+class Solution {
+    public int calculate(String s) {
+        Stack<Integer> expression = new Stack<>();
+        char sign = '+';
+        int num = 0;
+        int result = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            num = 0;
+            char ch = s.charAt(i);
+            if(Character.isDigit(s.charAt(i))) {
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + (int) (s.charAt(i) - '0');
+                    i++;
+                }
+                i--;
+                
+                if(sign == '+') {
+                    expression.push(num);
+                } else if (sign == '-') {
+                    expression.push(-num);
+                } else if (sign == '*') {
+                    expression.push(expression.pop()* num);   
+                } else if (sign == '/') {
+                    expression.push(expression.pop()/num);
+                }
+            } else if (ch == '+') {
+                sign = '+';
+            } else if (ch == '-') {
+                sign = '-';
+            } else if (ch == '*') {
+                sign = '*';
+            } else if (ch == '/') {
+                sign = '/';
+            }
+        }
+        
+        for (int n : expression) {
+            result += n;
+        }
+        return result;
+    }
+}
