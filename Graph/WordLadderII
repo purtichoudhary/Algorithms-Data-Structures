@@ -1,0 +1,70 @@
+class Solution {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> result = new ArrayList<>();
+        Set<String> dict = new HashSet<>(wordList);
+        if(!dict.contains(endWord)) {
+            return result;
+        }
+        
+        Map<String, List<String>> transform = new HashMap<>();
+        Set<String> startSet = new HashSet<>();
+        startSet.add(beginWord);
+        bfs(startSet, endWord, wordList, transform, dict);
+        
+        List<String> list = new ArrayList<>();
+        list.add(beginWord);
+        dfs(result, list, beginWord, endWord, transform);
+        return result;
+    }
+    
+    private void dfs(List<List<String>> result, List<String> list, String word, String endWord, Map<String,                   List<String>> transform) {
+        if(word.equals(endWord)) {
+            result.add(new ArrayList(list));
+            return;
+        }
+        
+        if(transform.get(word) == null) return;
+        for(String next : transform.get(word)) {
+            list.add(next);
+            dfs(result, list, next, endWord, transform);
+            list.remove(list.size()-1);
+        }
+    }
+    
+    private void bfs(Set<String> startSet, String endWord, List<String> wordList, Map<String, List<String>> transform,             Set<String> dict) {
+        if(startSet.size() == 0) return;
+        
+        Set<String> tmp = new HashSet<>();
+        dict.removeAll(startSet);
+        boolean finish = false;
+        
+        for(String s : startSet) {
+            char[] chs = s.toCharArray();
+            for(int i = 0; i < chs.length; i++) {
+                char old = chs[i];
+                
+                for(char c = 'a'; c <= 'z'; c++) {
+                    if(chs[i] == c) continue;
+                    chs[i] = c;
+                    String new_word = String.valueOf(chs);
+                    
+                    if(dict.contains(new_word)) {
+                        if(new_word.equals(endWord)) {
+                            finish = true;
+                        } else {
+                            tmp.add(new_word);
+                        }
+                        if(transform.get(s) == null) {
+                            transform.put(s, new ArrayList<>());
+                        }
+                        transform.get(s).add(new_word);
+                    }
+                }
+                chs[i] = old;
+            }
+        }
+        if(!finish) {
+            bfs(tmp, endWord, wordList, transform, dict);
+        }
+    }
+}
